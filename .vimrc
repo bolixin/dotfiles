@@ -141,52 +141,58 @@
 " =============================================== "
 " ================= Bundles 设置 ================ "
 " =============================================== "
-set nocompatible               " be iMproved
-filetype off                   " required!
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
 " My Bundles here:
 " ------------------------------------------- "
-Bundle 'vim-scripts/a.vim'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'kien/ctrlp.vim'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'xuhdev/SingleCompile'
-Bundle 'scrooloose/syntastic'
-Bundle 'majutsushi/tagbar'
-Bundle 'godlygeek/tabular'
-Bundle 'SirVer/ultisnips'
-Bundle 'octol/vim-cpp-enhanced-highlight'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/a.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'kien/ctrlp.vim'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'xuhdev/SingleCompile'
+Plugin 'scrooloose/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'godlygeek/tabular'
+Plugin 'SirVer/ultisnips'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'honza/vim-snippets'
+Plugin 'Valloric/YouCompleteMe'
 
 " Color Scheme for Vim
-Bundle 'tomasr/molokai'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'vim-scripts/Tango2'
-
+Plugin 'tomasr/molokai'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-scripts/Tango2'
 " ------------------------------------------- "
-filetype plugin indent on     " required!
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
 "
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" Put your non-Plugin stuff after this line
 " ----------------------------------------------- "
 
 " =============================================== "
@@ -425,41 +431,43 @@ nmap <leader>bb :Tab /=<CR>    " 按=号对齐代码
 nmap <leader>bn :Tab /         " 自定义对齐
 
 " ################## Tagbar ################### "
-" 调用Tagbar
+" 标签导航
+let g:tagbar_autofocus = 1     "打开tagbar时焦点移过去 
 let g:tagbar_ctags_bin='/usr/bin/ctags-exuberant'     "加入ctags路径 
-let g:tagbar_width = 40       "设置宽度，默认为40
 "autocmd VimEnter * nested :call tagbar#autoopen(1)    "打开vim时自动打开tagbar
 "let g:tagbar_left = 1         "在左侧
 let g:tagbar_right = 1         "在右侧
-" \tb                 打开Tagbar，在右侧栏显示
-nmap <leader>tb :TagbarToggle<CR>
+let g:tagbar_width = 40       "设置宽度，默认为40
+nmap <leader>tb :TagbarToggle<CR>     " \tb 打开Tagbar，在右侧栏显示
 
 " ############ ultisnips ############### "
 " 快速插入代码片段
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<Down>"
-let g:UltiSnipsJumpBackwardTrigger="<Up>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-set runtimepath+=~/.vim/UltiSnips    " 代码片段集合
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" set runtimepath+=~/.vim/UltiSnips    " 代码片段集合
 
 " ############ YouCompleteMe ########### "
 " Youcompleteme  
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 " 默认tab 自动补全冲突
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_min_num_of_chars_for_completion = 1
+
+let g:ycm_cache_omnifunc=0	" 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
 let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+"let g:ycm_confirm_extra_conf=0     "关闭加载.ycm_extra_conf.py提示
+let g:ycm_collect_identifiers_from_tags_files = 1       " 开启 YCM 基于标签引擎
 let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
-let g:ycm_seed_identifiers_with_syntax = 1   "语言关键字补全, 需要的自己打开
-let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_min_num_of_chars_for_completion = 1       " 从第1个键入字符就开始罗列匹配项
 let g:ycm_key_invoke_completion = '<C-Space>'       " 直接触发自动补全
-"let g:ycm_confirm_extra_conf=0
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_seed_identifiers_with_syntax = 1   "语言关键字补全
+
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>   " 跳转到定义处
 
 " ===================================== "
 " ============ 自定义快捷键 =========== "
@@ -514,6 +522,14 @@ nmap <c-s> <ESC>:w<CR>
 " \c                  复制至公共剪贴板
 nmap <leader>c "+y
 vmap <leader>c "+y
+
+" \qq                退出
+nmap <leader>qq <ESC>:q<CR>
+imap <leader>qq <ESC>:q<CR>
+
+" \wq                   保存并退出
+nmap <leader>wq <ESC>:wq<CR>
+imap <leader>wq <ESC>:wq<CR>
 
 " \v                  从公共剪贴板粘贴
 imap <leader>v <ESC>"+p
